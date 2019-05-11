@@ -9,8 +9,8 @@ trigger:
 pool: 'default'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: ping 192.168.2.50 -c 4
+  displayName: 'Run ping to Prism Central'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
