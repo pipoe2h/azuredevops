@@ -20,6 +20,7 @@ steps:
   displayName: 'Run a multi-line script'
 
 - script: |
+    #!/bin/bash
     $OUTPUT = $(curl -k --header 'Content-Type: application/json' -u $PC_USER:$PC_PASS  https://$PC_IP:9440/api/nutanix/v3/services/nucalm/status)
     echo $OUTPUT
   env:
