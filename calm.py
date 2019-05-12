@@ -4,6 +4,8 @@ import os
 from base64 import b64encode
 import sys
 
+urllib3.disable_warnings()
+
 class PcManager():
 
     def __init__(self, ip_addr, username, password):
@@ -41,7 +43,6 @@ class PcManager():
         response = http.request(method=self.method, url=base_url, body=self.body)
 
         if response:
-            urllib3.disable_warnings()
             response = json.loads(response.data.decode('UTF-8'))
         return response
 
