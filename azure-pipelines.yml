@@ -21,6 +21,7 @@ steps:
 
 - script: |
     #!/bin/bash
+    set -ex
     curl -k --header 'Content-Type: application/json' -u $PC_USER:$PC_PASS  https://$PC_IP:9440/api/nutanix/v3/services/nucalm/status
   env:
     PC_IP: $(pc_ip)
