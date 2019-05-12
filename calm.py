@@ -3,8 +3,8 @@ import json
 import os
 from base64 import b64encode
 import sys
-
-urllib3.disable_warnings()
+import requests
+requests.packages.urllib3.disable_warnings()
 
 class PcManager():
 
