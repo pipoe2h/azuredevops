@@ -24,7 +24,7 @@ steps:
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
-    scriptPath: 'python3.6 calm.py'
+    scriptPath: 'calm.py'
   env:
     PC_IP: $(pc_ip)
     PC_USERNAME: $(pc_user)
