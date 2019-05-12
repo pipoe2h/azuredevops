@@ -17,10 +17,12 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- task: InvokeRESTAPI@1
+- task: Bash@3
   inputs:
-    connectionType: 'connectedServiceName'
-    serviceConnection: 'Theale PC'
-    method: 'GET'
-    urlSuffix: 'services/nucalm/status'
-    waitForCompletion: 'true'
+    targetType: 'inline'
+    script: 'curl -k --header ''Content-Type: application/json'' -u $PC_USER:'$PC_PASS'  https://$PC_IP:9440/api/nutanix/v3/services/nucalm/status
+      # Use the environment variables input below to pass secret variables to this script'
+  env:
+    PC_IP: $(pc_ip)
+    PC_USER: $(pc_user)
+    PC_PASS: $(pc_pass)
