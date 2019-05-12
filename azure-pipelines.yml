@@ -20,3 +20,4 @@ steps:
     PC_USER: $(pc_user)
     PC_PASS: $(pc_pass)
   displayName: 'Check if Calm is enabled'
+
