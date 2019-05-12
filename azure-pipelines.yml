@@ -31,5 +31,5 @@ steps:
     PC_PASSWORD: $(pc_pass)
     CALM_BPNAME: $(calm_bpname)
     CALM_APPPROFILENAME: $(calm_appprofilename)
-    CALM_APPNAME: 'demo-azuredevops_$(Build.BuildId)'
+    CALM_APPNAME: '$(calm_appname)_$(Build.BuildId)'
     CALM_PRJNAME: $(calm_prjname)
