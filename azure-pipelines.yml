@@ -21,6 +21,12 @@ steps:
     PC_PASSWORD: $(pc_pass)
   displayName: 'Check if Calm is enabled'
 
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    addToPath: true
+    architecture: 'x64'
+
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
