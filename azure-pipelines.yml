@@ -11,15 +11,9 @@ trigger:
 pool: 'default'
 
 steps:
-- script: ping 192.168.2.50 -c 4
-  displayName: 'Run ping to Prism Central'
-
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
-- script: 'OUTPUT="$(curl -k --header "Content-Type: application/json" -u $PC_USER:$PC_PASS  https://$PC_IP:9440/api/nutanix/v3/services/nucalm/status)" && echo ${OUTPUT}'
+    OUTPUT="$(curl -k --header "Content-Type: application/json" -u $PC_USER:$PC_PASS  https://$PC_IP:9440/api/nutanix/v3/services/nucalm/status)"
+    echo ${OUTPUT}
   env:
     PC_IP: $(pc_ip)
     PC_USER: $(pc_user)
