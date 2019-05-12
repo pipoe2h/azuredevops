@@ -4,8 +4,6 @@ import os
 from base64 import b64encode
 import sys
 
-urllib3.disable_warnings()
-
 class PcManager():
 
     def __init__(self, ip_addr, username, password):
@@ -26,6 +24,8 @@ class PcManager():
 
     # Create a REST client session.
     def rest_call(self):
+        urllib3.disable_warnings()
+        
         base_url = 'https://%s:9440/api/nutanix/v3/%s' % (
             self.ip_addr, self.sub_url)
         if self.body and self.content_type == "application/json":
