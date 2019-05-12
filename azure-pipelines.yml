@@ -12,15 +12,6 @@ trigger:
 pool: 'default'
 
 steps:
-- script: |
-    OUTPUT="$(curl -k --header "Content-Type: application/json" -u $PC_USERNAME:$PC_PASSWORD  https://$PC_IP:9440/api/nutanix/v3/services/nucalm/status)"
-    echo ${OUTPUT}
-  env:
-    PC_IP: $(pc_ip)
-    PC_USERNAME: $(pc_user)
-    PC_PASSWORD: $(pc_pass)
-  displayName: 'Check if Calm is enabled'
-
 - task: PythonScript@0
   inputs:
     scriptSource: 'filePath'
@@ -32,5 +23,5 @@ steps:
     PC_PASSWORD: $(pc_pass)
     CALM_BPNAME: $(calm_bpname)
     CALM_APPPROFILENAME: $(calm_appprofilename)
-    CALM_APPNAME: '$(calm_appname)_$(Build.BuildId)'
+    CALM_APPNAME: $(calm_appname)_$(Build.BuildId)
     CALM_PRJNAME: $(calm_prjname)
