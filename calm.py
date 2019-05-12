@@ -41,6 +41,7 @@ class PcManager():
         response = http.request(method=self.method, url=base_url, body=self.body)
 
         if response:
+            urllib3.disable_warnings()
             response = json.loads(response.data.decode('UTF-8'))
         return response
 
