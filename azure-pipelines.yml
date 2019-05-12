@@ -28,6 +28,4 @@ steps:
 
 - task: Bash@3
   inputs:
-    filePath: 'curl'
-    arguments: "-k --header 'Content-Type: application/json' -u $PC_USER:$PC_PASS  https://$PC_IP:9440/api/nutanix/v3/services/nucalm/status"
-    
+    filePath: '/usr/bin/curl'    
