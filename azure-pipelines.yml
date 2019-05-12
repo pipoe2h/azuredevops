@@ -16,3 +16,11 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+
+- task: InvokeRESTAPI@1
+  inputs:
+    connectionType: 'connectedServiceName'
+    serviceConnection: 'Theale PC'
+    method: 'GET'
+    urlSuffix: 'services/nucalm/status'
+    waitForCompletion: 'true'
