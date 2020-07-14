@@ -14,7 +14,8 @@ RUN apt-get update \
         libcurl4 \
         libicu60 \
         libunwind8 \
-        netcat
+        netcat \
+        sudo
 
 ARG CALM_DSL_TARBALL="https://github.com/nutanix/calm-dsl/archive/master.zip"
 WORKDIR /root
