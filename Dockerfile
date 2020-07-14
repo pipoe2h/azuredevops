@@ -23,7 +23,8 @@ RUN apt-get update \
         libicu60 \
         libunwind8 \
         netcat \
-        sudo
+        sudo \
+        wget
 
 ARG CALM_DSL_TARBALL="https://github.com/nutanix/calm-dsl/archive/master.zip"
 WORKDIR /root
