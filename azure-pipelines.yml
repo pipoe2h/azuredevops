@@ -27,6 +27,8 @@ stages:
   - job: BuildContainer
     displayName: 'Build Calm DSL Container Image'
     steps:
+    - checkout: self
+    
     - task: Docker@2
       inputs:
         repository: ntnxcalm-dsl
