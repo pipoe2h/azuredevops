@@ -24,7 +24,8 @@ stages:
           - checkout: self
 
           - script: |
-              docker run --rm -v $PWD/blueprint:/root/blueprint ntnx/calm-dsl /bin/bash -c " \
+              ls -la \
+                && docker run --rm -v $PWD/blueprint:/root/blueprint ntnx/calm-dsl /bin/bash -c " \
                 calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName) \
                 && calm compile bp -f blueprint/main.py"
             
