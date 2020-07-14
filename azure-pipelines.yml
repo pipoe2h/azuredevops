@@ -41,7 +41,7 @@ stages:
   jobs:
   - deployment: DeployCalm
     displayName: 'Deploy to Calm'
-    container: ntnxcalm-dsl
+    container: ntnxcalm-dsl:$(Build.BuildId)
     environment: 'dev'
     strategy:
       runOnce:
