@@ -10,32 +10,41 @@ variables:
 trigger:
 - master
 
-steps:
-- task: Docker@2
-  displayName: Build an image
-  inputs:
-    repository: ntnxcalm-dsl
-    command: build
-    Dockerfile: Dockerfile
+# steps:
+# - task: Docker@2
+#   displayName: Build an image
+#   inputs:
+#     repository: ntnxcalm-dsl
+#     command: build
+#     Dockerfile: Dockerfile
 
 # container: ntnxcalm-dsl:latest
+pool: 'default'
 
+stages:
+- stage: Build
+  jobs:
+  - displayName: 'Build Calm DSL Container Image'
+    steps:
+    - task: Docker@2
+      inputs:
+        repository: ntnxcalm-dsl
+        command: build
+        Dockerfile: Dockerfile
+      
+- stage: Deploy
+  jobs:
+  - deployment: DeployCalm
+    displayName: 'Deploy to Calm'
+    container: ntnxcalm-dsl
+    environment: 'dev'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: ls -la
 
-# stages:
-# - stage: Deploy
-#   jobs:
-#   - deployment: DeployCalm
-#     displayName: 'Deploy Calm Blueprint'
-#     pool: 'default'
-#     container: ntnx/calm-dsl:latest
-#     environment: 'dev'
-#     strategy:
-#       runOnce:
-#         deploy:
-#           steps:
-#           - script: ls -la
-
-#           - checkout: self
+          - checkout: self
 
 #           # - script: |
 #           #       docker run --rm -v $(pwd):/root/blueprint:Z ntnx/calm-dsl /bin/bash -c " \
