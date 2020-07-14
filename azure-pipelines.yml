@@ -33,9 +33,10 @@ stages:
 
     - task: Docker@2
       inputs:
-        repository: ntnxcalm-dsl
-        command: build
-        Dockerfile: Dockerfile
+        repository: 'ukdemo/calm-dsl'
+        command: 'buildAndPush'
+        Dockerfile: 'Dockerfile'
+        tags: 'latest'
       
 - stage: Deploy
   jobs:
