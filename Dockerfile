@@ -1,11 +1,19 @@
-ARG VARIANT="3.7"
-FROM python:${VARIANT}
+# ARG VARIANT="3.7"
+# FROM python:${VARIANT}
+
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
 
 RUN apt-get update \
-&& apt-get install -y --no-install-recommends \
+  && apt-get install -y python3-pip python3-dev \
+  && cd /usr/local/bin \
+  && ln -s /usr/bin/python3 python \
+  && pip3 install --upgrade pip
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
         ca-certificates \
         curl \
         jq \
