@@ -50,12 +50,9 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: ls -la
+          # - checkout: none
 
-          - checkout: none
-
-#           # - script: |
-#           #       docker run --rm -v $(pwd):/root/blueprint:Z ntnx/calm-dsl /bin/bash -c " \
-#           #       calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName) \
-#           #       && calm compile bp -f blueprint/main.py"
+          - script: |
+                calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
+                calm compile bp -f main.py
             
