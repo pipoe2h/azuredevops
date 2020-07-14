@@ -21,7 +21,7 @@ stages:
       runOnce:
         deploy:
           steps:
-          - checkout: none
+          - checkout: self
 
           - script: |
               docker run --rm ntnx/calm-dsl /bin/bash -c " \
