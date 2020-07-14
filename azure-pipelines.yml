@@ -24,7 +24,8 @@ pool: 'default'
 stages:
 - stage: Build
   jobs:
-  - displayName: 'Build Calm DSL Container Image'
+  - job: BuildContainer
+    displayName: 'Build Calm DSL Container Image'
     steps:
     - task: Docker@2
       inputs:
