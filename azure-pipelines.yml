@@ -16,10 +16,7 @@ stages:
   - deployment: DeployCalm
     displayName: 'Deploy Calm Blueprint'
     pool: 'default'
-    container:
-      image: ntnx/calm-dsl:latest
-      volumes:
-      - $(pwd):/root/blueprint
+    container: ntnx/calm-dsl:latest
     environment: 'dev'
     strategy:
       runOnce:
