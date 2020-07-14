@@ -10,10 +10,15 @@ variables:
 trigger:
 - master
 
-container: ntnx/calm-dsl:latest
-
 steps:
-- script: printenv
+- task: Docker@2
+  displayName: Build an image
+  inputs:
+    repository: ntnxcalm-dsl
+    command: build
+    Dockerfile: Dockerfile
+
+# container: ntnxcalm-dsl:latest
 
 
 # stages:
