@@ -29,8 +29,8 @@ AHV_CENTOS_76 = vm_disk_package(
 # Credentials definition
 CREDENTIALS = read_env('.local/credentials')
 
-OS_USERNAME = os.getenv("CALMDSL_OS_USERNAME") or CREDENTIALS.get("USERNAME")
-OS_PASSWORD = os.getenv("CALMDSL_OS_PASSWORD") or CREDENTIALS.get("PASSWORD")
+OS_USERNAME = os.getenv("OS_USERNAME") or CREDENTIALS.get("OS_USERNAME")
+OS_PASSWORD = os.getenv("OS_PASSWORD") or CREDENTIALS.get("OS_PASSWORD")
 
 Cred_OS = basic_cred(
     username=OS_USERNAME,
