@@ -25,6 +25,7 @@ stages:
 
           - script: |
               ls -la \
+                && pwd \
                 && docker run --rm -v $(pwd)/blueprint:/root/blueprint:Z ntnx/calm-dsl /bin/bash -c "ls -la \
                 && ls -la blueprint \
                 && calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName) \
