@@ -32,7 +32,7 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: 'UK SE Docker Hub'
+        containerRegistry: $(dockerRegistryServiceConnection)
         repository: 'ukdemo/calm-dsl'
         command: 'buildAndPush'
         Dockerfile: 'Dockerfile'
