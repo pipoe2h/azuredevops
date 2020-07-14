@@ -19,7 +19,7 @@ stages:
     container:
       image: ntnx/calm-dsl:latest
       volumes:
-      - .:/root/blueprint
+      - $(pwd):/root/blueprint
     environment: 'dev'
     strategy:
       runOnce:
