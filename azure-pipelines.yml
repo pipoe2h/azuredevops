@@ -54,7 +54,7 @@ stages:
           - script: |
               hostname
               pwd
-              ls -la /root
+              sudo ls -la /root
               ls -la
           # - checkout: none
 
