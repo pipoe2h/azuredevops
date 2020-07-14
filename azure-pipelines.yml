@@ -16,7 +16,10 @@ stages:
   - deployment: DeployCalm
     displayName: 'Deploy Calm Blueprint'
     pool: 'default'
-    container: 'ntnx/calm-dsl:latest'
+    container:
+      image: ntnx/calm-dsl:latest
+      volumes:
+      - .:/root/blueprint
     environment: 'dev'
     strategy:
       runOnce:
@@ -26,8 +29,8 @@ stages:
 
           - checkout: self
 
-          - script: |
-                docker run --rm -v $(pwd):/root/blueprint:Z ntnx/calm-dsl /bin/bash -c " \
-                calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName) \
-                && calm compile bp -f blueprint/main.py"
+          # - script: |
+          #       docker run --rm -v $(pwd):/root/blueprint:Z ntnx/calm-dsl /bin/bash -c " \
+          #       calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName) \
+          #       && calm compile bp -f blueprint/main.py"
             
