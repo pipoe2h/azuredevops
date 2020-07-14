@@ -8,8 +8,8 @@ from calm.dsl.builtins import read_local_file, read_ahv_spec, read_vmw_spec, rea
 from calm.dsl.builtins import vm_disk_package
 from calm.dsl.builtins import read_env
 
-import sys
-sys.path.append('blueprint')
+# import sys
+# sys.path.append('blueprint')
 
 from variablestemplate import *
 
