@@ -23,26 +23,28 @@ pool: 'default'
 
 stages:
 - stage: Build
+  displayName: Build and push stage
   jobs:
-  - job: BuildContainer
+  - job: Build
+    displayName: Build job
     workspace:
         clean: all
-    displayName: 'Build Calm DSL Container Image'
     steps:
-    - checkout: self
-
     - task: Docker@2
       inputs:
         repository: 'ukdemo/calm-dsl'
         command: 'buildAndPush'
         Dockerfile: 'Dockerfile'
-        tags: 'latest'
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          'latest'
+          $(Build.BuildId)
       
 - stage: Deploy
   jobs:
   - deployment: DeployCalm
     displayName: 'Deploy to Calm'
-    container: ntnxcalm-dsl:$(Build.BuildId)
+    container: ukdemo/calm-dsl:latest
     environment: 'dev'
     strategy:
       runOnce:
