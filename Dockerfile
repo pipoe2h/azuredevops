@@ -24,7 +24,8 @@ RUN apt-get update \
         libunwind8 \
         netcat \
         sudo \
-        wget
+        wget \
+        unzip
 
 ARG CALM_DSL_TARBALL="https://github.com/nutanix/calm-dsl/archive/master.zip"
 WORKDIR /root

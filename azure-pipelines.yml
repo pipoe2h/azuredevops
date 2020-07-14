@@ -51,14 +51,14 @@ stages:
       runOnce:
         deploy:
           steps:
-          - script: |
-              hostname
-              pwd
-              sudo ls -la /root
-              ls -la
+          # - script: |
+          #     hostname
+          #     pwd
+          #     sudo ls -la /root
+          #     ls -la
           # - checkout: none
 
-          # - script: |
-          #       calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
-          #       calm compile bp -f main.py
+          - script: |
+                sudo calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
+                sudo calm compile bp -f main.py
             
