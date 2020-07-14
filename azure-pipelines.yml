@@ -46,6 +46,8 @@ stages:
     displayName: 'Deploy to Calm'
     container: ukdemo/calm-dsl:latest
     environment: 'dev'
+    pool:
+      vmImage: 'ubuntu-16.04'
     strategy:
       runOnce:
         deploy:
