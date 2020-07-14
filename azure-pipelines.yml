@@ -16,14 +16,14 @@ stages:
   - deployment: DeployCalm
     displayName: 'Deploy Calm Blueprint'
     pool: 'default'
-    container: 'ntnx/calm-dsl'
+    container: 'ntnx/calm-dsl:latest'
     environment: 'dev'
     strategy:
       runOnce:
         deploy:
           steps:
           - script: ls -la
-          
+
           - checkout: self
 
           - script: |
