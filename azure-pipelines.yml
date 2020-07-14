@@ -22,29 +22,30 @@ trigger:
 pool: 'default'
 
 stages:
-- stage: Build
-  displayName: Build and push stage
-  jobs:
-  - job: Build
-    displayName: Build job
-    workspace:
-        clean: all
-    steps:
-    - task: Docker@2
-      inputs:
-        containerRegistry: $(dockerRegistryServiceConnection)
-        repository: 'ukdemo/calm-dsl'
-        command: 'buildAndPush'
-        Dockerfile: 'Dockerfile'
-        tags: |
-          latest
-          $(Build.BuildId)
+# - stage: Build
+#   displayName: Build and push stage
+#   jobs:
+#   - job: Build
+#     displayName: Build job
+#     workspace:
+#         clean: all
+#     steps:
+#     - task: Docker@2
+#       inputs:
+#         containerRegistry: $(dockerRegistryServiceConnection)
+#         repository: 'ukdemo/calm-dsl'
+#         command: 'buildAndPush'
+#         Dockerfile: 'Dockerfile'
+#         tags: |
+#           latest
+#           $(Build.BuildId)
       
 - stage: Deploy
   jobs:
   - deployment: DeployCalm
     displayName: 'Deploy to Calm'
-    container: ukdemo/calm-dsl:latest
+    # container: ukdemo/calm-dsl:latest
+    container: python:latest
     environment: 'dev'
     pool: 'default'
     strategy:
@@ -59,6 +60,11 @@ stages:
           # - checkout: none
 
           - script: |
-                sudo calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
-                sudo calm compile bp -f main.py
+                git clone https://github.com/nutanix/calm-dsl.git
+                cd calm-dsl
+                pip3 install --no-cache-dir -r requirements.txt virtualenv --user
+                make dist
+                pip3 install --no-cache-dir dist/calm.dsl*.whl --user
+                calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
+                calm compile bp -f main.py
             
