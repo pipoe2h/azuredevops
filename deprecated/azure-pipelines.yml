@@ -1,0 +1,27 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+variables:
+- group: theale-prism-central
+
+trigger:
+- master
+
+pool: 'default'
+
+steps:
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'filePath'
+    scriptPath: 'calm.py'
+    pythonInterpreter: 'python3.6'
+  env:
+    PC_IP: $(pc_ip)
+    PC_USERNAME: $(pc_user)
+    PC_PASSWORD: $(pc_pass)
+    CALM_BPNAME: $(calm_blueprintName)
+    CALM_APPPROFILENAME: $(calm_appProfileName)
+    CALM_APPNAME: $(calm_applicationName)_$(Build.BuildId)
+    CALM_PRJNAME: $(calm_projectName)

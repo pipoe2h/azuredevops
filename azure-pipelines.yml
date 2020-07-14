@@ -2,26 +2,31 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
+name: 0.1.$(Rev:r)
 
 variables:
 - group: theale-prism-central
 
 trigger:
-- master
+  branches:
+    include:
+    - azure-pipelines
 
-pool: 'default'
+stages:
+- stage: Deploy
+  jobs:
+  - deployment: DeployCalm
+    displayName: 'Deploy Calm Blueprint'
+    pool: 'default'
+    environment: 'dev'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: none
 
-steps:
-- task: PythonScript@0
-  inputs:
-    scriptSource: 'filePath'
-    scriptPath: 'calm.py'
-    pythonInterpreter: 'python3.6'
-  env:
-    PC_IP: $(pc_ip)
-    PC_USERNAME: $(pc_user)
-    PC_PASSWORD: $(pc_pass)
-    CALM_BPNAME: $(calm_blueprintName)
-    CALM_APPPROFILENAME: $(calm_appProfileName)
-    CALM_APPNAME: $(calm_applicationName)_$(Build.BuildId)
-    CALM_PRJNAME: $(calm_projectName)
+          - script: |
+              docker run --rm ntnx/calm-dsl /bin/bash -c " \
+                calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName) \
+                && calm compile bp -f main.py"
+            
