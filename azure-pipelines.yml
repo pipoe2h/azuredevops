@@ -33,8 +33,8 @@ stages:
     - script: |
         USER_ID=$(id -u)
         GROUP_ID=$(id -g)
-        echo '##vso[task.setvariable variable=user_id]$USER_ID'
-        echo '##vso[task.setvariable variable=group_id]$GROUP_ID'
+        echo "##vso[task.setvariable variable=user_id]$USER_ID"
+        echo "##vso[task.setvariable variable=group_id]$GROUP_ID"
     - task: Docker@2
       inputs:
         repository: 'ukdemo/calm-dsl'
