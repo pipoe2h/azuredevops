@@ -59,10 +59,7 @@ stages:
           #     ls -la
           # - checkout: none
           
-          - env:
-              OS_PASSWORD: $(os_password)
-
-            script: |
+          - script: |
                 export PATH=$PATH:$HOME/.local/bin
                 git clone https://github.com/nutanix/calm-dsl.git
                 cd calm-dsl
@@ -74,3 +71,5 @@ stages:
                 calm create bp -f main.py --force
                 calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
             
+            env:
+              OS_PASSWORD: $(os_password)
