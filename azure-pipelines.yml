@@ -30,11 +30,14 @@ stages:
     workspace:
         clean: all
     steps:
+    - script: |
+        USER_ID=$(id -u)
+        GROUP_ID=$(id -g)
     - task: Docker@2
       inputs:
         repository: 'ukdemo/calm-dsl'
         command: build
-        arguments: --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g)
+        arguments: --build-arg $USER_ID --build-arg $GROUP_ID
         tags: |
           latest
           $(Build.BuildId)
