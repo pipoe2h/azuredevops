@@ -6,7 +6,7 @@ ARG GROUP_ID
 
 RUN addgroup --gid $GROUP_ID user
 RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
-USER user
+# USER user
 
 ARG CALM_DSL_TARBALL="https://github.com/nutanix/calm-dsl/archive/master.zip"
 WORKDIR /home/user
