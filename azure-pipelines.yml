@@ -106,17 +106,10 @@ stages:
 #           # - checkout: none
           
           - script: |
-                # export PATH=$PATH:$HOME/.local/bin
-                # git clone https://github.com/nutanix/calm-dsl.git
-                # cd calm-dsl
-                # pip3 install --no-cache-dir -r requirements.txt virtualenv --user
-                # make dist
-                # pip3 install --no-cache-dir dist/calm.dsl*.whl --user
-                # cd ..
-                sudo -u root ' \
-                  calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName) \
-                  && calm create bp -f main.py --force \
-                  && calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint'
+              sudo ln -s /root/.local/bin/calm /usr/local/bin/calm
+              sudo calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
+              sudo calm create bp -f main.py --force
+              sudo --preserve-env=OS_USERNAME --preserve-env=OS_PASSWORD calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
             
             env:
               OS_PASSWORD: $(os_password)
