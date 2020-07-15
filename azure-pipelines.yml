@@ -33,11 +33,13 @@ stages:
     - script: |
         USER_ID=$(id -u)
         GROUP_ID=$(id -g)
+        echo '##vso[task.setvariable variable=user_id]$USER_ID'
+        echo '##vso[task.setvariable variable=group_id]$GROUP_ID'
     - task: Docker@2
       inputs:
         repository: 'ukdemo/calm-dsl'
         command: build
-        arguments: --build-arg $USER_ID --build-arg $GROUP_ID
+        arguments: --build-arg $(user_id) --build-arg $(group_id)
         tags: |
           latest
           $(Build.BuildId)
