@@ -11,7 +11,7 @@ trigger:
   - master
 
 pool: 'default'
-container: 'ukdemo/calm-dsl'
+container: 'ukdemo/calm-dsl:latest'
 
 steps:
   - checkout: self
