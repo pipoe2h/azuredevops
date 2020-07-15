@@ -22,32 +22,39 @@ trigger:
 pool: 'default'
 
 stages:
-# - stage: Build
-#   displayName: Build and push stage
-#   jobs:
-#   - job: Build
-#     displayName: Build job
-#     workspace:
-#         clean: all
-#     steps:
-#     - task: Docker@2
-#       inputs:
-#         containerRegistry: $(dockerRegistryServiceConnection)
-#         repository: 'ukdemo/calm-dsl'
-#         command: 'buildAndPush'
-#         Dockerfile: 'Dockerfile'
-#         tags: |
-#           latest
-#           $(Build.BuildId)
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: Build
+    displayName: Build job
+    workspace:
+        clean: all
+    steps:
+    - task: Docker@2
+      inputs:
+        repository: 'ukdemo/calm-dsl'
+        command: build
+        arguments: --build-arg USER_ID=$(id -u) --build-arg GROUP_ID=$(id -g)
+        tags: |
+          latest
+          $(Build.BuildId)
+    - task: Docker@2
+      inputs:
+        containerRegistry: $(dockerRegistryServiceConnection)
+        repository: 'ukdemo/calm-dsl'
+        command: push
+        tags: |
+          latest
+          $(Build.BuildId)
       
 - stage: Deploy
   jobs:
   - deployment: DeployCalm
     displayName: 'Deploy to Calm'
-    # container: ukdemo/calm-dsl:latest
-    container: python:latest
+    container: ukdemo/calm-dsl:latest
+    # container: python:latest
     environment: 'dev'
-    pool: 'default'
+    # pool: 'default'
     strategy:
       runOnce:
         deploy:
@@ -60,13 +67,13 @@ stages:
           # - checkout: none
           
           - script: |
-                export PATH=$PATH:$HOME/.local/bin
-                git clone https://github.com/nutanix/calm-dsl.git
-                cd calm-dsl
-                pip3 install --no-cache-dir -r requirements.txt virtualenv --user
-                make dist
-                pip3 install --no-cache-dir dist/calm.dsl*.whl --user
-                cd ..
+                # export PATH=$PATH:$HOME/.local/bin
+                # git clone https://github.com/nutanix/calm-dsl.git
+                # cd calm-dsl
+                # pip3 install --no-cache-dir -r requirements.txt virtualenv --user
+                # make dist
+                # pip3 install --no-cache-dir dist/calm.dsl*.whl --user
+                # cd ..
                 calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
                 calm create bp -f main.py --force
                 calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
