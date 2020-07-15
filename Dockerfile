@@ -11,7 +11,7 @@ USER user
 ARG CALM_DSL_TARBALL="https://github.com/nutanix/calm-dsl/archive/master.zip"
 WORKDIR /home/user
 RUN mkdir -p `python3 -m site --user-site`
-ENV PATH=$HOME/.local/bin:$PATH
+ENV PATH=/home/user/.local/bin:$PATH
 
 RUN wget -q -O /tmp/calm-dsl.zip $CALM_DSL_TARBALL \
     && unzip /tmp/calm-dsl.zip -d /tmp \
