@@ -29,15 +29,8 @@ AHV_CENTOS_76 = vm_disk_package(
 # Credentials definition
 CREDENTIALS = read_env('.local/credentials')
 
-if os.getenv("OS_USERNAME"):
-    OS_USERNAME = os.getenv("OS_USERNAME")
-else:
-    OS_USERNAME = CREDENTIALS.get("OS_USERNAME")
-
-if os.getenv("OS_PASSWORD"):
-    OS_PASSWORD = os.getenv("OS_PASSWORD")
-else:
-    OS_PASSWORD = CREDENTIALS.get("OS_PASSWORD")
+OS_USERNAME = os.getenv("OS_USERNAME") or CREDENTIALS.get("OS_USERNAME")
+OS_PASSWORD = os.getenv("OS_PASSWORD") or CREDENTIALS.get("OS_PASSWORD")
 
 Cred_OS = basic_cred(
     username=OS_USERNAME,
