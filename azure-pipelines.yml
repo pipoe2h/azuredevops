@@ -106,6 +106,8 @@ stages:
 #           # - checkout: none
           
           - script: |
+              pwd
+              ls -la
               sudo ln -s /root/.local/bin/calm /usr/local/bin/calm
               sudo calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
               sudo calm create bp -f main.py --force
