@@ -58,7 +58,9 @@ stages:
           #     sudo ls -la /root
           #     ls -la
           # - checkout: none
-
+          
+          - script: printenv
+          
           - script: |
                 export PATH=$PATH:$HOME/.local/bin
                 git clone https://github.com/nutanix/calm-dsl.git
