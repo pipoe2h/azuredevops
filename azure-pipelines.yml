@@ -16,6 +16,7 @@ container: 'ukdemo/calm-dsl:latest'
 steps:
   - checkout: self
   - script: ls -la
+  - script: calm
 
 # stages:
 # - stage: Init
