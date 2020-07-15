@@ -9,7 +9,7 @@ RUN adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
 USER user
 
 ARG CALM_DSL_TARBALL="https://github.com/nutanix/calm-dsl/archive/master.zip"
-# WORKDIR $HOME
+WORKDIR /home/user
 RUN mkdir -p `python3 -m site --user-site`
 ENV PATH=$HOME/.local/bin:$PATH
 
