@@ -89,9 +89,9 @@ stages:
                 # make dist
                 # pip3 install --no-cache-dir dist/calm.dsl*.whl --user
                 # cd ..
-                calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
-                calm create bp -f main.py --force
-                calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
+                sudo calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
+                sudo calm create bp -f main.py --force
+                sudo calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
             
             env:
               OS_PASSWORD: $(os_password)
