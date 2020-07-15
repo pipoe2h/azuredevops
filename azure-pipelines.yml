@@ -5,96 +5,116 @@
 name: 0.1.$(Rev:r)
 
 variables:
-- group: theale-prism-central
+  - group: theale-prism-central
 
 trigger:
-- master
+  - master
 
-# steps:
-# - task: Docker@2
-#   displayName: Build an image
-#   inputs:
-#     repository: ntnxcalm-dsl
-#     command: build
-#     Dockerfile: Dockerfile
-
-# container: ntnxcalm-dsl:latest
 pool: 'default'
+container: 'ukdemo/calm-dsl'
 
-stages:
-- stage: Build
-  displayName: Build and push stage
-  jobs:
-  - job: Build
-    displayName: Build job
-    # workspace:
-    #     clean: all
-    steps:
-    - task: Docker@2
-      displayName: Build and push image
-      inputs:
-        containerRegistry: $(dockerRegistryServiceConnection)
-        repository: ukdemo/calm-dsl
-        command: buildAndPush
-        tags: |
-          latest
-          $(Build.BuildId)
-    # steps:
-    # - script: |
-    #     USER_ID=$(id -u)
-    #     GROUP_ID=$(id -g)
-    #     echo "##vso[task.setvariable variable=user_id]$USER_ID"
-    #     echo "##vso[task.setvariable variable=group_id]$GROUP_ID"
-    # - task: Docker@2
-    #   inputs:
-    #     repository: 'ukdemo/calm-dsl'
-    #     command: build
-    #     arguments: --build-arg USER_ID=$(user_id) --build-arg GROUP_ID=$(group_id)
-    #     tags: |
-    #       latest
-    #       $(Build.BuildId)
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: $(dockerRegistryServiceConnection)
-    #     repository: 'ukdemo/calm-dsl'
-    #     command: push
-    #     tags: |
-    #       latest
-    #       $(Build.BuildId)
+steps:
+  - checkout: self
+  - script: ls -la
+
+# stages:
+# - stage: Init
+#   displayName: Initialize DSL
+#   jobs:
+#   - job: Initialize
+#     displayName: Initialize DSL
+#     steps:
+#     - script: 
+
+# - stage: Build
+#   displayName: Build blueprint and push
+# - stage: Deploy
+#   displayName: Deploy blueprint
+
+# # steps:
+# # - task: Docker@2
+# #   displayName: Build an image
+# #   inputs:
+# #     repository: ntnxcalm-dsl
+# #     command: build
+# #     Dockerfile: Dockerfile
+
+# # container: ntnxcalm-dsl:latest
+# pool: 'default'
+
+# stages:
+# - stage: Build
+#   displayName: Build and push stage
+#   jobs:
+#   - job: Build
+#     displayName: Build job
+#     # workspace:
+#     #     clean: all
+#     steps:
+#     - task: Docker@2
+#       displayName: Build and push image
+#       inputs:
+#         containerRegistry: $(dockerRegistryServiceConnection)
+#         repository: ukdemo/calm-dsl
+#         command: buildAndPush
+#         tags: |
+#           latest
+#           $(Build.BuildId)
+#     # steps:
+#     # - script: |
+#     #     USER_ID=$(id -u)
+#     #     GROUP_ID=$(id -g)
+#     #     echo "##vso[task.setvariable variable=user_id]$USER_ID"
+#     #     echo "##vso[task.setvariable variable=group_id]$GROUP_ID"
+#     # - task: Docker@2
+#     #   inputs:
+#     #     repository: 'ukdemo/calm-dsl'
+#     #     command: build
+#     #     arguments: --build-arg USER_ID=$(user_id) --build-arg GROUP_ID=$(group_id)
+#     #     tags: |
+#     #       latest
+#     #       $(Build.BuildId)
+#     # - task: Docker@2
+#     #   inputs:
+#     #     containerRegistry: $(dockerRegistryServiceConnection)
+#     #     repository: 'ukdemo/calm-dsl'
+#     #     command: push
+#     #     tags: |
+#     #       latest
+#     #       $(Build.BuildId)
       
-- stage: Deploy
-  jobs:
-  - deployment: DeployCalm
-    displayName: 'Deploy to Calm'
-    container: ukdemo/calm-dsl:latest
-    # container: python:latest
-    environment: 'dev'
-    # pool: 'default'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          # - script: |
-          #     hostname
-          #     pwd
-          #     sudo ls -la /root
-          #     ls -la
-          # - checkout: none
+# - stage: Deploy
+#   jobs:
+#   - deployment: DeployCalm
+#     displayName: 'Deploy to Calm'
+#     container: ukdemo/calm-dsl:latest
+#     # container: python:latest
+#     environment: 'dev'
+#     # pool: 'default'
+#     strategy:
+#       runOnce:
+#         deploy:
+#           steps:
+#           # - script: |
+#           #     hostname
+#           #     pwd
+#           #     sudo ls -la /root
+#           #     ls -la
+#           # - checkout: none
           
-          - script: |
-                # export PATH=$PATH:$HOME/.local/bin
-                # git clone https://github.com/nutanix/calm-dsl.git
-                # cd calm-dsl
-                # pip3 install --no-cache-dir -r requirements.txt virtualenv --user
-                # make dist
-                # pip3 install --no-cache-dir dist/calm.dsl*.whl --user
-                # cd ..
-                # export PATH=/root/.local/bin:$PATH
-                alias calm="sudo /root/.local/bin/calm"
-                sudo /root/.local/bin/calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
-                sudo /root/.local/bin/calm create bp -f main.py --force
-                sudo /root/.local/bin/calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
+#           - script: |
+#                 # export PATH=$PATH:$HOME/.local/bin
+#                 # git clone https://github.com/nutanix/calm-dsl.git
+#                 # cd calm-dsl
+#                 # pip3 install --no-cache-dir -r requirements.txt virtualenv --user
+#                 # make dist
+#                 # pip3 install --no-cache-dir dist/calm.dsl*.whl --user
+#                 # cd ..
+#                 # export PATH=/root/.local/bin:$PATH
+#                 alias calm="sudo /root/.local/bin/calm"
+#                 sudo /root/.local/bin/calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
+#                 sudo /root/.local/bin/calm create bp -f main.py --force
+#                 sudo /root/.local/bin/calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
             
-            env:
-              OS_USERNAME: $(os_username)
-              OS_PASSWORD: $(os_password)
+#             env:
+#               OS_PASSWORD: $(os_password)
