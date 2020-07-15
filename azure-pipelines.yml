@@ -89,8 +89,7 @@ stages:
                 # make dist
                 # pip3 install --no-cache-dir dist/calm.dsl*.whl --user
                 # cd ..
-                sudo -i
-                export PATH=/root/.local/bin:$PATH
+                # export PATH=/root/.local/bin:$PATH
                 calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
                 calm create bp -f main.py --force
                 calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint

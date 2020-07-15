@@ -24,7 +24,8 @@ RUN wget -q -O /tmp/calm-dsl.zip $CALM_DSL_TARBALL \
     && make dist \
     && pip3 install --no-cache-dir dist/calm.dsl*.whl --user \
     && cd ~ \
-    && rm -fR /tmp/calm-dsl-master
+    && rm -fR /tmp/calm-dsl-master \
+    && ln -s /root/.local/bin/calm /usr/local/bin/calm
 
 # RUN wget -q -O /tmp/calm-dsl.zip $CALM_DSL_TARBALL \
 #     && unzip /tmp/calm-dsl.zip -d /tmp \
