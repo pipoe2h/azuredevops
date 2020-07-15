@@ -39,7 +39,7 @@ stages:
       inputs:
         repository: 'ukdemo/calm-dsl'
         command: build
-        arguments: --build-arg $(user_id) --build-arg $(group_id)
+        arguments: --build-arg USER_ID=$(user_id) --build-arg GROUP_ID=$(group_id)
         tags: |
           latest
           $(Build.BuildId)
