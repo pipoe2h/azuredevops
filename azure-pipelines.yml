@@ -96,4 +96,5 @@ stages:
                 sudo /root/.local/bin/calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
             
             env:
+              OS_USERNAME: $(os_username)
               OS_PASSWORD: $(os_password)
