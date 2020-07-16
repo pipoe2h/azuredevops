@@ -122,7 +122,7 @@ stages:
     dependsOn: DeployCalm
     steps:
     - checkout: none
-    - script: docker run --rm -it -v $(Pipeline.Workspace)/.calm:/root/.calm:rw ukdemo/calm-dsl calm watch app az_devops_$(Build.BuildId)
+    - script: docker run --rm -v $(Pipeline.Workspace)/.calm:/root/.calm:rw ukdemo/calm-dsl calm watch app az_devops_$(Build.BuildId)
  
   - job: Cleanup
     dependsOn: WatchDeployment
