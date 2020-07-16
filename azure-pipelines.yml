@@ -47,6 +47,9 @@ stages:
 - stage: Build
   displayName: Build and push stage
   jobs:
+  - job: Cleanup
+    workspace:
+      clean: all
   - job: Build
     displayName: Build job
     # workspace:
