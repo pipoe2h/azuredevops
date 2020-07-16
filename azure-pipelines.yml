@@ -35,7 +35,6 @@ stages:
     displayName: 'Deploy to Calm'
     container:
       image: ukdemo/calm-dsl:latest
-      # options: -v /home/centos/myagent/_work/1/.calm:/root/.calm:rw
     environment: 'dev'
     strategy:
       runOnce:
@@ -55,8 +54,3 @@ stages:
   #   steps:
   #   - checkout: none
   #   - script: docker run --rm -v $(Pipeline.Workspace)/.calm:/root/.calm:rw ukdemo/calm-dsl calm watch app az_devops_$(Build.BuildId)
- 
-  # - job: Cleanup
-  #   dependsOn: DeployCalm
-  #   workspace:
-  #     clean: all
