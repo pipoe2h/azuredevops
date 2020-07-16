@@ -50,6 +50,8 @@ stages:
   - job: Cleanup
     workspace:
       clean: all
+    steps:
+    - checkout: none
   - job: Build
     displayName: Build job
     # workspace:
