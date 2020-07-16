@@ -107,7 +107,7 @@ stages:
           
           - script: |
               sudo ln -s /root/.local/bin/calm /usr/local/bin/calm
-              sudo calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
+              sudo calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName) --use_custom_defaults
               sudo OS_USERNAME=$(os_username) OS_PASSWORD=$(os_password) calm create bp -f main.py --force
               sudo calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
               sudo calm watch app az_devops_$(Build.BuildId)
