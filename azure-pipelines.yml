@@ -31,10 +31,6 @@ stages:
       
 - stage: Deploy
   jobs:
-  - job: Calm
-    steps:
-    - checkout: none
-    - script: mkdir -p .calm
   - deployment: DeployCalm
     displayName: 'Deploy to Calm'
     container:
@@ -52,6 +48,7 @@ stages:
               sudo calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
               sudo OS_USERNAME=$(os_username) OS_PASSWORD=$(os_password) calm create bp -f main.py --force
               sudo calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
+              sudo py3clean .
  
   # - job: WatchDeployment
   #   dependsOn: DeployCalm
