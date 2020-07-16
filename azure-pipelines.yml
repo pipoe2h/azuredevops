@@ -93,7 +93,7 @@ stages:
     displayName: 'Deploy to Calm'
     container:
       image: ukdemo/calm-dsl:latest
-      options: "-v /home/centos/myagent/_work/1/.calm:/root/.calm:rw"
+      options: -v $(Pipeline.Workspace)/.calm:/root/.calm:rw
     # container: python:latest
     environment: 'dev'
     # pool: 'default'
@@ -120,7 +120,7 @@ stages:
     dependsOn: DeployCalm
     steps:
     - checkout: none
-    - script: docker exec --rm -it -v $(Pipeline.Workspace)/.calm:/root/.calm:rw ukdemo/calm-dsl calm watch app az_devops_$(Build.BuildId)
+    - script: docker run --rm -it -v $(Pipeline.Workspace)/.calm:/root/.calm:rw ukdemo/calm-dsl calm watch app az_devops_$(Build.BuildId)
  
   - job: Cleanup
     dependsOn: WatchDeployment
