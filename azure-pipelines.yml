@@ -11,37 +11,6 @@ trigger:
   - master
 
 pool: 'default'
-# container: 'ukdemo/calm-dsl:latest'
-
-# steps:
-#   - checkout: self
-#   - script: ls -la
-#   - script: calm
-
-# stages:
-# - stage: Init
-#   displayName: Initialize DSL
-#   jobs:
-#   - job: Initialize
-#     displayName: Initialize DSL
-#     steps:
-#     - script: 
-
-# - stage: Build
-#   displayName: Build blueprint and push
-# - stage: Deploy
-#   displayName: Deploy blueprint
-
-# # steps:
-# # - task: Docker@2
-# #   displayName: Build an image
-# #   inputs:
-# #     repository: ntnxcalm-dsl
-# #     command: build
-# #     Dockerfile: Dockerfile
-
-# # container: ntnxcalm-dsl:latest
-# pool: 'default'
 
 stages:
 - stage: Build
@@ -49,8 +18,6 @@ stages:
   jobs:
   - job: Build
     displayName: Build job
-    # workspace:
-    #     clean: all
     steps:
     - task: Docker@2
       displayName: Build and push image
@@ -61,28 +28,6 @@ stages:
         tags: |
           latest
           $(Build.BuildId)
-    # steps:
-    # - script: |
-    #     USER_ID=$(id -u)
-    #     GROUP_ID=$(id -g)
-    #     echo "##vso[task.setvariable variable=user_id]$USER_ID"
-    #     echo "##vso[task.setvariable variable=group_id]$GROUP_ID"
-    # - task: Docker@2
-    #   inputs:
-    #     repository: 'ukdemo/calm-dsl'
-    #     command: build
-    #     arguments: --build-arg USER_ID=$(user_id) --build-arg GROUP_ID=$(group_id)
-    #     tags: |
-    #       latest
-    #       $(Build.BuildId)
-    # - task: Docker@2
-    #   inputs:
-    #     containerRegistry: $(dockerRegistryServiceConnection)
-    #     repository: 'ukdemo/calm-dsl'
-    #     command: push
-    #     tags: |
-    #       latest
-    #       $(Build.BuildId)
       
 - stage: Deploy
   jobs:
@@ -94,37 +39,27 @@ stages:
     displayName: 'Deploy to Calm'
     container:
       image: ukdemo/calm-dsl:latest
-      options: -v /home/centos/myagent/_work/1/.calm:/root/.calm:rw
-    # container: python:latest
+      # options: -v /home/centos/myagent/_work/1/.calm:/root/.calm:rw
     environment: 'dev'
-    # pool: 'default'
     strategy:
       runOnce:
         deploy:
           steps:
           - checkout: none
-#           # - script: |
-#           #     hostname
-#           #     pwd
-#           #     sudo ls -la /root
-#           #     ls -la
-#           # - checkout: none
           
           - script: |
               sudo ln -s /root/.local/bin/calm /usr/local/bin/calm
-              pwd
-              ls -la
               sudo calm init dsl -i $(pc_ip) -P $(pc_port) -u $(pc_user) -p $(pc_pass) -pj $(calm_projectName)
               sudo OS_USERNAME=$(os_username) OS_PASSWORD=$(os_password) calm create bp -f main.py --force
               sudo calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
  
-  - job: WatchDeployment
-    dependsOn: DeployCalm
-    steps:
-    - checkout: none
-    - script: docker run --rm -v $(Pipeline.Workspace)/.calm:/root/.calm:rw ukdemo/calm-dsl calm watch app az_devops_$(Build.BuildId)
+  # - job: WatchDeployment
+  #   dependsOn: DeployCalm
+  #   steps:
+  #   - checkout: none
+  #   - script: docker run --rm -v $(Pipeline.Workspace)/.calm:/root/.calm:rw ukdemo/calm-dsl calm watch app az_devops_$(Build.BuildId)
  
   - job: Cleanup
-    dependsOn: WatchDeployment
+    dependsOn: DeployCalm
     workspace:
       clean: all
