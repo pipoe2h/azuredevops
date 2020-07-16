@@ -88,12 +88,13 @@ stages:
   jobs:
   - job: Calm
     steps:
+    - checkout: none
     - script: mkdir -p .calm
   - deployment: DeployCalm
     displayName: 'Deploy to Calm'
     container:
       image: ukdemo/calm-dsl:latest
-      options: -v $(Pipeline.Workspace)/.calm:/root/.calm:rw
+      options: -v /home/centos/myagent/_work/1/.calm:/root/.calm:rw
     # container: python:latest
     environment: 'dev'
     # pool: 'default'
@@ -101,6 +102,7 @@ stages:
       runOnce:
         deploy:
           steps:
+          - checkout: none
 #           # - script: |
 #           #     hostname
 #           #     pwd
