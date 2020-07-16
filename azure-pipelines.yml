@@ -119,6 +119,7 @@ stages:
   - job: WatchDeployment
     dependsOn: DeployCalm
     steps:
+    - checkout: none
     - script: docker exec --rm -it -v $(Pipeline.Workspace)/.calm:/root/.calm:rw ukdemo/calm-dsl calm watch app az_devops_$(Build.BuildId)
  
   - job: Cleanup
