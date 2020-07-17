@@ -8,7 +8,7 @@ resources:
       disk_address:
         adapter_type: SCSI
         device_index: 0
-  memory_size_mib: 1024
+  memory_size_mib: 2048
   num_sockets: 1
   num_vcpus_per_socket: 1
   boot_config:
