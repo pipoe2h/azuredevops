@@ -6,7 +6,7 @@ WORKDIR /root
 RUN mkdir -p `python3 -m site --user-site`
 ENV PATH=/root/.local/bin:$PATH
 
-RUN apt-get update && apt-get install -y sudo \
+RUN apt-get update && apt-get install -y sudo jq \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget -q -O /tmp/calm-dsl.zip $CALM_DSL_TARBALL

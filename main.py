@@ -61,7 +61,7 @@ class CentOS_Substrate(Substrate):
         disk_packages={1: AHV_CENTOS_76}
     )
 
-    provider_spec.spec["name"] = "jg-azdevops-@@{calm_unique}@@"
+    provider_spec.spec["name"] = "@@{calm_application_name}@@"
     provider_spec.spec["resources"]["nic_list"][0]["subnet_reference"]["name"] = ENV.get("SUBNET_NAME")
     provider_spec.spec["resources"]["nic_list"][0]["subnet_reference"]["uuid"] = ENV.get("SUBNET_UUID")
 

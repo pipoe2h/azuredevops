@@ -48,4 +48,5 @@ stages:
               sudo OS_USERNAME=$(os_username) OS_PASSWORD=$(os_password) calm create bp -f main.py --force
               sudo calm launch bp -a az_devops_$(Build.BuildId) -i CentOS_Blueprint
               sudo calm watch app az_devops_$(Build.BuildId)
+              sudo calm describe app az_devops_$(Build.BuildId) -o json | jq '.status.resources.deployment_list[].substrate_configuration.element_list[] | "\(.instance_name) \(.address)"'
               sudo py3clean .
